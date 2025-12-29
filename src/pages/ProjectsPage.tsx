@@ -33,12 +33,12 @@ const projects: Project[] = [
     demo: "https://chatspace.demo.com/",
   },
   {
-    title: "Coursly",
-    description: "Course management system for online learning with video streaming, progress tracking, and interactive quizzes.",
-    icon: "📚",
-    tech: ["Spring Boot", "React", "MySQL", "Docker"],
-    github: "https://github.com/sujalmittal123/coursly",
-    demo: "https://coursly.demo.com",
+    title: "Page Replacement",
+    description: "Interactive visualization tool for page replacement algorithms including FIFO, LRU, and Optimal. Helps understand memory management concepts with step-by-step animations.",
+    icon: "🔄",
+    tech: ["Python","HTML", "CSS", "JavaScript", "Algorithms"],
+    github: "https://github.com/sujalmittal123/pagereplacement",
+    demo: "https://pagereplacement.demo.com",
   },
 ];
 
