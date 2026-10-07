@@ -1,10 +1,13 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, type ChangeEvent, type FormEvent } from "react";
+import { Link } from "react-router-dom";
+import chargeEasyLogo from "../assets/charge-easy.png";
 
 interface Project {
   id: string;
   title: string;
   subtitle: string;
   icon: string;
+  image?: string;
   year: string;
   description: string;
   mission: string;
@@ -12,6 +15,7 @@ interface Project {
   links: {
     github: string;
     demo?: string;
+    privacy?: string;
   };
   architecture: string[];
   checkpoints: string[];
@@ -21,7 +25,47 @@ interface Project {
   }[];
 }
 
-const projects: Project[] = [
+interface DraftProject {
+  title: string;
+  subtitle: string;
+  year: string;
+  icon: string;
+  description: string;
+  mission: string;
+  stack: string;
+  github: string;
+  demo: string;
+}
+
+const initialProjects: Project[] = [
+  {
+    id: "chargeeasy",
+    title: "Charge Easy",
+    subtitle: "Offline Battery Telemetry & Analytics",
+    icon: "⚡",
+    image: chargeEasyLogo,
+    year: "2025",
+    description:
+      "A high-precision, 100% offline Android battery monitoring and analytics application built with Flutter and native Kotlin. Follows a strict Zero Fake Data principle with real hardware telemetry, mathematically derived wattage, screen-off background session tracking, and true battery health diagnostics.",
+    mission: "Deliver authentic, zero-simulated battery diagnostics with 100% on-device privacy and zero internet access.",
+    stack: ["Flutter", "Dart", "Kotlin", "Android SDK", "Drift (SQLite)", "Riverpod"],
+    links: {
+      github: "https://github.com/sujalmittal123/chargeeasy",
+      privacy: "/privacy/charge-easy",
+    },
+    architecture: ["EventChannel Stream", "Foreground Service", "Shared SQLite DB", "Drift & Riverpod UI"],
+    checkpoints: [
+      "1-second BatteryManager telemetry & live wattage calculation",
+      "Screen-off session logging with Partial WakeLock persistence",
+      "Real battery capacity & cumulative cycle degradation diagnostics",
+      "100% offline architecture with zero internet permission",
+    ],
+    signals: [
+      { label: "Hardware Precision", value: 98 },
+      { label: "Offline Privacy", value: 100 },
+      { label: "Telemetry Fidelity", value: 95 },
+    ],
+  },
   {
     id: "neurovault",
     title: "NeuroVault",
@@ -128,13 +172,96 @@ const projects: Project[] = [
   },
 ];
 
+const initialDraft: DraftProject = {
+  title: "",
+  subtitle: "",
+  year: "2026",
+  icon: "🚀",
+  description: "",
+  mission: "",
+  stack: "",
+  github: "",
+  demo: "",
+};
+
+const makeSlug = (value: string) =>
+  value
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+
 export default function ProjectsPage() {
-  const [selectedId, setSelectedId] = useState(projects[0].id);
+  const [projectList, setProjectList] = useState<Project[]>(initialProjects);
+  const [selectedId, setSelectedId] = useState(initialProjects[0].id);
+  const [isAdding, setIsAdding] = useState(false);
+  const [draft, setDraft] = useState<DraftProject>(initialDraft);
 
   const activeProject = useMemo(
-    () => projects.find((project) => project.id === selectedId) ?? projects[0],
-    [selectedId]
+    () => projectList.find((project) => project.id === selectedId) ?? projectList[0],
+    [projectList, selectedId]
   );
+
+  if (!activeProject) {
+    return null;
+  }
+
+  const handleDraftChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = event.target;
+    setDraft((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleAddProject = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (!draft.title.trim() || !draft.subtitle.trim() || !draft.description.trim() || !draft.github.trim()) {
+      return;
+    }
+
+    const parsedStack = draft.stack
+      .split(",")
+      .map((item) => item.trim())
+      .filter(Boolean);
+
+    const stack = parsedStack.length > 0 ? parsedStack : ["React", "TypeScript", "Node.js"];
+    const idBase = makeSlug(draft.title) || "custom-project";
+
+    const created: Project = {
+      id: `${idBase}-${Date.now()}`,
+      title: draft.title.trim(),
+      subtitle: draft.subtitle.trim(),
+      icon: draft.icon.trim() || "🚀",
+      year: draft.year.trim() || "2026",
+      description: draft.description.trim(),
+      mission: draft.mission.trim() || "Create product-ready systems with fast delivery and clean architecture.",
+      stack,
+      links: {
+        github: draft.github.trim(),
+        demo: draft.demo.trim() || undefined,
+      },
+      architecture: [
+        `${stack[0]} Core`,
+        `${stack[1] ?? "Data"} Layer`,
+        `${stack[2] ?? "UI"} Module`,
+        "Ops Matrix",
+      ],
+      checkpoints: [
+        `Implemented ${draft.title.trim()} core workflow`,
+        `Integrated ${stack.slice(0, 2).join(" + ")}`,
+        "Prepared deployment-ready architecture",
+      ],
+      signals: [
+        { label: "Scalability", value: 80 },
+        { label: "UX Clarity", value: 82 },
+        { label: "Reliability", value: 85 },
+      ],
+    };
+
+    setProjectList((prev) => [created, ...prev]);
+    setSelectedId(created.id);
+    setDraft(initialDraft);
+    setIsAdding(false);
+  };
 
   return (
     <section className="pt-24 pb-14">
@@ -151,16 +278,113 @@ export default function ProjectsPage() {
             </span>
           </h1>
           <p className="max-w-3xl mx-auto text-slate-600 dark:text-slate-300">
-            Click any project node. The center hologram reconfigures architecture, mission, and signal profile in real time.
+            Click any project node. Center holo-system updates live. You can now add your own project node directly from this page.
           </p>
         </header>
 
-        <div className="grid lg:grid-cols-[0.38fr_0.62fr] gap-6 items-start">
-          <aside className="rounded-3xl border border-zinc-300/70 dark:border-zinc-700/70 bg-white/70 dark:bg-zinc-900/70 backdrop-blur-xl p-4 sm:p-5">
-            <p className="text-[11px] uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-400 px-2 mb-4">Project Nodes</p>
+        <div className="grid lg:grid-cols-[0.4fr_0.6fr] gap-6 items-start">
+          <aside className="rounded-3xl border border-zinc-300/70 dark:border-zinc-700/70 bg-white/70 dark:bg-zinc-900/70 backdrop-blur-xl p-4 sm:p-5 space-y-4">
+            <div className="flex items-center justify-between gap-3">
+              <p className="text-[11px] uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-400 px-2">Project Nodes</p>
+              <button
+                type="button"
+                onClick={() => setIsAdding((prev) => !prev)}
+                className="px-3 py-1.5 rounded-lg text-xs uppercase tracking-[0.12em] bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 hover:bg-zinc-700 dark:hover:bg-zinc-200 transition-colors"
+              >
+                {isAdding ? "Close" : "Add Project"}
+              </button>
+            </div>
+
+            {isAdding && (
+              <form onSubmit={handleAddProject} className="rounded-2xl border border-zinc-300/70 dark:border-zinc-700/70 bg-white/75 dark:bg-zinc-900/70 p-4 space-y-3">
+                <div className="grid grid-cols-2 gap-2">
+                  <input
+                    name="title"
+                    value={draft.title}
+                    onChange={handleDraftChange}
+                    placeholder="Project title"
+                    className="col-span-2 rounded-lg border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 px-3 py-2 text-sm text-zinc-700 dark:text-zinc-200 focus:outline-none focus:border-zinc-500"
+                    required
+                  />
+                  <input
+                    name="subtitle"
+                    value={draft.subtitle}
+                    onChange={handleDraftChange}
+                    placeholder="Subtitle"
+                    className="col-span-2 rounded-lg border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 px-3 py-2 text-sm text-zinc-700 dark:text-zinc-200 focus:outline-none focus:border-zinc-500"
+                    required
+                  />
+                  <input
+                    name="year"
+                    value={draft.year}
+                    onChange={handleDraftChange}
+                    placeholder="Year"
+                    className="rounded-lg border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 px-3 py-2 text-sm text-zinc-700 dark:text-zinc-200 focus:outline-none focus:border-zinc-500"
+                  />
+                  <input
+                    name="icon"
+                    value={draft.icon}
+                    onChange={handleDraftChange}
+                    placeholder="Emoji"
+                    className="rounded-lg border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 px-3 py-2 text-sm text-zinc-700 dark:text-zinc-200 focus:outline-none focus:border-zinc-500"
+                  />
+                </div>
+
+                <textarea
+                  name="description"
+                  value={draft.description}
+                  onChange={handleDraftChange}
+                  placeholder="Description"
+                  className="w-full rounded-lg border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 px-3 py-2 text-sm text-zinc-700 dark:text-zinc-200 focus:outline-none focus:border-zinc-500 resize-none"
+                  rows={3}
+                  required
+                />
+
+                <textarea
+                  name="mission"
+                  value={draft.mission}
+                  onChange={handleDraftChange}
+                  placeholder="Mission (optional)"
+                  className="w-full rounded-lg border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 px-3 py-2 text-sm text-zinc-700 dark:text-zinc-200 focus:outline-none focus:border-zinc-500 resize-none"
+                  rows={2}
+                />
+
+                <input
+                  name="stack"
+                  value={draft.stack}
+                  onChange={handleDraftChange}
+                  placeholder="Stack: React, Node.js, PostgreSQL"
+                  className="w-full rounded-lg border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 px-3 py-2 text-sm text-zinc-700 dark:text-zinc-200 focus:outline-none focus:border-zinc-500"
+                />
+
+                <input
+                  name="github"
+                  value={draft.github}
+                  onChange={handleDraftChange}
+                  placeholder="GitHub URL"
+                  className="w-full rounded-lg border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 px-3 py-2 text-sm text-zinc-700 dark:text-zinc-200 focus:outline-none focus:border-zinc-500"
+                  required
+                />
+
+                <input
+                  name="demo"
+                  value={draft.demo}
+                  onChange={handleDraftChange}
+                  placeholder="Live Demo URL (optional)"
+                  className="w-full rounded-lg border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 px-3 py-2 text-sm text-zinc-700 dark:text-zinc-200 focus:outline-none focus:border-zinc-500"
+                />
+
+                <button
+                  type="submit"
+                  className="w-full rounded-xl py-2.5 text-sm font-semibold bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 hover:bg-zinc-700 dark:hover:bg-zinc-200 transition-colors"
+                >
+                  Add to Holo-Lab
+                </button>
+              </form>
+            )}
 
             <div className="space-y-3">
-              {projects.map((project) => {
+              {projectList.map((project) => {
                 const isActive = activeProject.id === project.id;
 
                 return (
@@ -175,8 +399,12 @@ export default function ProjectsPage() {
                     }`}
                   >
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl border border-zinc-300/70 dark:border-zinc-700/70 bg-zinc-100 dark:bg-zinc-800/60 flex items-center justify-center text-xl">
-                        {project.icon}
+                      <div className="w-10 h-10 rounded-xl border border-zinc-300/70 dark:border-zinc-700/70 bg-zinc-100 dark:bg-zinc-800/60 flex items-center justify-center text-xl overflow-hidden flex-shrink-0">
+                        {project.image ? (
+                          <img src={project.image} alt={project.title} className="w-full h-full object-cover" />
+                        ) : (
+                          project.icon
+                        )}
                       </div>
                       <div className="min-w-0">
                         <p className="font-semibold text-zinc-900 dark:text-zinc-100 truncate">{project.title}</p>
@@ -246,8 +474,12 @@ export default function ProjectsPage() {
                     {activeProject.architecture[3]}
                   </div>
 
-                  <div className="relative z-10 w-24 h-24 rounded-2xl border border-zinc-300/70 dark:border-zinc-700/70 bg-white dark:bg-zinc-900 flex items-center justify-center text-5xl shadow-lg shadow-zinc-900/10 dark:shadow-white/10">
-                    {activeProject.icon}
+                  <div className="relative z-10 w-24 h-24 rounded-2xl border border-zinc-300/70 dark:border-zinc-700/70 bg-white dark:bg-zinc-900 flex items-center justify-center text-5xl shadow-lg shadow-zinc-900/10 dark:shadow-white/10 overflow-hidden">
+                    {activeProject.image ? (
+                      <img src={activeProject.image} alt={activeProject.title} className="w-full h-full object-cover rounded-xl" />
+                    ) : (
+                      activeProject.icon
+                    )}
                   </div>
                 </div>
 
@@ -294,7 +526,7 @@ export default function ProjectsPage() {
                     href={activeProject.links.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-4 py-2.5 rounded-xl bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 text-sm font-medium hover:bg-zinc-700 dark:hover:bg-zinc-200 transition-colors"
+                    className="relative overflow-hidden px-5 py-2.5 rounded-xl bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 text-sm font-semibold hover:bg-zinc-700 dark:hover:bg-zinc-200 transition-colors"
                   >
                     View Code
                   </a>
@@ -303,10 +535,21 @@ export default function ProjectsPage() {
                       href={activeProject.links.demo}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="px-4 py-2.5 rounded-xl border border-zinc-300 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 text-sm font-medium hover:border-zinc-900 dark:hover:border-zinc-200 hover:text-zinc-900 dark:hover:text-white transition-colors"
+                      className="relative overflow-hidden px-5 py-2.5 rounded-xl border border-zinc-300 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 text-sm font-semibold hover:border-zinc-900 dark:hover:border-zinc-200 hover:text-zinc-900 dark:hover:text-white transition-colors"
                     >
                       Live Demo
                     </a>
+                  )}
+                  {activeProject.links.privacy && (
+                    <Link
+                      to={activeProject.links.privacy}
+                      className="relative overflow-hidden px-5 py-2.5 rounded-xl border border-emerald-500/50 text-emerald-700 dark:text-emerald-400 bg-emerald-500/10 hover:bg-emerald-500/20 text-sm font-semibold transition-colors flex items-center gap-1.5"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                      </svg>
+                      Privacy Policy
+                    </Link>
                   )}
                 </div>
               </div>

@@ -7,7 +7,7 @@ const metrics = [
   { value: "24/7", label: "Learning Mode" },
 ];
 
-const stack = ["React", "TypeScript", "Spring Boot", "Node.js", "PostgreSQL", "Docker"];
+const stack = ["React", "TypeScript", "Flutter", "Spring Boot", "Node.js", "PostgreSQL", "Docker"];
 
 const velocityData = [58, 62, 68, 66, 74, 83, 88];
 const deploymentData = [36, 48, 52, 61, 68, 79, 92];

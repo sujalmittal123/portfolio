@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy - Charge Easy (Charge Tracker)</title>
+  <meta name="description" content="Official Privacy Policy for Charge Easy (Charge Tracker) Android application. 100% Offline, Zero Data Collection, On-device SQLite storage." />
+  <style>
+    :root {
+      --bg: #09090b;
+      --card-bg: #18181b;
+      --border: #27272a;
+      --text: #f4f4f5;
+      --text-muted: #a1a1aa;
+      --accent: #10b981;
+      --accent-dim: rgba(16, 185, 129, 0.12);
+    }
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #f8fafc;
+        --card-bg: #ffffff;
+        --border: #e2e8f0;
+        --text: #0f172a;
+        --text-muted: #64748b;
+        --accent: #059669;
+        --accent-dim: rgba(5, 150, 105, 0.1);
+      }
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      padding: 40px 20px;
+    }
+    .container {
+      max-width: 820px;
+      margin: 0 auto;
+    }
+    .header-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 32px;
+      margin-bottom: 28px;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      background: var(--accent-dim);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+    h1 {
+      font-size: 32px;
+      font-weight: 800;
+      margin-bottom: 8px;
+      letter-spacing: -0.02em;
+    }
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 15px;
+    }
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+    }
+    .meta-item .label {
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      margin-bottom: 2px;
+    }
+    .meta-item .val {
+      font-weight: 600;
+    }
+    .highlight-card {
+      background: var(--accent-dim);
+      border: 1px solid var(--accent);
+      border-radius: 16px;
+      padding: 20px 24px;
+      margin-bottom: 28px;
+      font-size: 15px;
+    }
+    .highlight-card strong {
+      color: var(--accent);
+    }
+    .content-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 36px;
+    }
+    section {
+      margin-bottom: 32px;
+    }
+    section:last-child {
+      margin-bottom: 0;
+    }
+    h2 {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--text);
+    }
+    h2 span {
+      color: var(--accent);
+      margin-right: 4px;
+    }
+    p {
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      font-size: 15px;
+    }
+    p strong {
+      color: var(--text);
+    }
+    ul {
+      margin-left: 20px;
+      margin-bottom: 16px;
+      color: var(--text-muted);
+      font-size: 15px;
+    }
+    li {
+      margin-bottom: 6px;
+    }
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 13px;
+      background: rgba(120, 120, 120, 0.15);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+    .permission-box {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 12px;
+      background: rgba(120, 120, 120, 0.04);
+    }
+    .permission-box .perm-name {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .permission-box .perm-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 0;
+    }
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    .footer {
+      text-align: center;
+      margin-top: 36px;
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header-card">
+      <div class="badge">
+        <span class="pulse-dot"></span>
+        100% Offline · Zero Data Collection
+      </div>
+      <h1>Privacy Policy</h1>
+      <p class="subtitle">Application: <strong>Charge Easy (Charge Tracker)</strong></p>
+
+      <div class="meta-grid">
+        <div class="meta-item">
+          <div class="label">Package ID</div>
+          <div class="val"><code>chargetracker.app</code></div>
+        </div>
+        <div class="meta-item">
+          <div class="label">Internet Permission</div>
+          <div class="val" style="color: var(--accent);">NONE (0 kB)</div>
+        </div>
+        <div class="meta-item">
+          <div class="label">Analytics / Trackers</div>
+          <div class="val" style="color: var(--accent);">ZERO</div>
+        </div>
+        <div class="meta-item">
+          <div class="label">Effective Date</div>
+          <div class="val">October 7, 2026</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="highlight-card">
+      <strong>Core Privacy Guarantee:</strong> Charge Easy is an offline-first battery analytics tool.
+      The app <strong>does not request or possess the Android Internet permission</strong> (<code>android.permission.INTERNET</code>).
+      It has zero capability to transmit your device data over the network, contains no ads or analytics trackers, and stores all readings exclusively inside your device's local sandbox.
+    </div>
+
+    <div class="content-card">
+      <section>
+        <h2><span>1.</span> Information We Collect</h2>
+        <p><strong>We do NOT collect any personally identifiable information (PII).</strong></p>
+        <p>Charge Easy does not collect names, email addresses, phone numbers, contacts, location, advertising IDs, or hardware identifiers. The application only accesses standard on-device battery telemetry via Android's local <code>BatteryManager</code> API:</p>
+        <ul>
+          <li>Instantaneous current (<code>CURRENT_NOW</code> in mA)</li>
+          <li>Battery voltage and temperature in °C</li>
+          <li>Battery level percentage and charging status</li>
+          <li>Battery manufacturer technology and design capacity</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2><span>2.</span> Zero Network Access Guarantee</h2>
+        <p>The Android manifest of Charge Easy intentionally omits <code>android.permission.INTERNET</code>. The Android OS prevents the app from creating any network sockets or communicating with external servers.</p>
+        <p>No device data, battery statistics, or usage logs ever leave your smartphone.</p>
+      </section>
+
+      <section>
+        <h2><span>3.</span> Local Storage & Sandboxing</h2>
+        <p>All recorded charging sessions and telemetry samples are stored exclusively in your device's private SQLite database (<code>chargetracker_db.sqlite</code>). This database is isolated from all other apps by Android's application sandbox.</p>
+        <p>Data is never synchronized to cloud services unless you use standard Android operating system-level device backups.</p>
+      </section>
+
+      <section>
+        <h2><span>4.</span> Android Permissions & Justifications</h2>
+        <p>Below is a complete explanation of every Android permission utilized by Charge Easy in compliance with Google Play Developer Policy:</p>
+
+        <div class="permission-box">
+          <div class="perm-name">android.permission.FOREGROUND_SERVICE & DATA_SYNC</div>
+          <div class="perm-desc">Allows the background charging service to log telemetry at 5-second intervals while connected to power, even when the screen is locked.</div>
+        </div>
+
+        <div class="permission-box">
+          <div class="perm-name">android.permission.WAKE_LOCK</div>
+          <div class="perm-desc">Maintains a partial CPU wake lock solely during active charging sessions to prevent kernel sleep from interrupting wattage logging.</div>
+        </div>
+
+        <div class="permission-box">
+          <div class="perm-name">android.permission.RECEIVE_BOOT_COMPLETED</div>
+          <div class="perm-desc">Detects if the device restarts while connected to a charger, resuming tracking seamlessly.</div>
+        </div>
+
+        <div class="permission-box">
+          <div class="perm-name">android.permission.POST_NOTIFICATIONS</div>
+          <div class="perm-desc">Displays the ongoing charging notification and triggers alerts when user-configured charge limits (e.g. 80%) are reached.</div>
+        </div>
+
+        <div class="permission-box">
+          <div class="perm-name">android.permission.VIBRATE</div>
+          <div class="perm-desc">Provides haptic feedback for charging completion and anti-theft disconnection alarms.</div>
+        </div>
+
+        <div class="permission-box">
+          <div class="perm-name">android.permission.SCHEDULE_EXACT_ALARM</div>
+          <div class="perm-desc">Ensures exact timing for disconnection guard alarms and scheduled reminders.</div>
+        </div>
+      </section>
+
+      <section>
+        <h2><span>5.</span> Third-Party Services & Trackers</h2>
+        <p>Charge Easy contains <strong>zero third-party SDKs, tracking libraries, or advertising networks</strong>.</p>
+        <ul>
+          <li>No Firebase or Google Analytics</li>
+          <li>No AdMob or marketing SDKs</li>
+          <li>No third-party crash reporters</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2><span>6.</span> Data Retention & User Control</h2>
+        <p>Users maintain complete control over their recorded history:</p>
+        <ul>
+          <li>You can delete individual sessions or clear the entire database inside the app settings.</li>
+          <li>Uninstalling the app permanently purges all stored databases and logs from your device storage.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2><span>7.</span> Children's Privacy</h2>
+        <p>Charge Easy does not address anyone under 13 years of age. We do not collect personal information from children or any other users.</p>
+      </section>
+
+      <section>
+        <h2><span>8.</span> Policy Updates</h2>
+        <p>Any updates to this policy will be posted on this page with a revised effective date.</p>
+      </section>
+
+      <section>
+        <h2><span>9.</span> Developer Contact</h2>
+        <p>For questions regarding this policy or the application:</p>
+        <p><strong>Developer:</strong> Sujal Agarwal<br />
+        <strong>Email:</strong> <a href="mailto:sujalmittal720@gmail.com">sujalmittal720@gmail.com</a><br />
+        <strong>GitHub Repository:</strong> <a href="https://github.com/sujalmittal123/chargeeasy" target="_blank" rel="noopener noreferrer">https://github.com/sujalmittal123/chargeeasy</a></p>
+      </section>
+    </div>
+
+    <div class="footer">
+      &copy; 2026 Sujal Agarwal · Charge Easy Privacy Policy
+    </div>
+  </div>
+</body>
+</html>

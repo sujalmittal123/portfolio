@@ -6,6 +6,7 @@ import HomePage from "./pages/HomePage";
 import AboutPage from "./pages/AboutPage";
 import ProjectsPage from "./pages/ProjectsPage";
 import ContactPage from "./pages/ContactPage";
+import ChargeEasyPrivacyPage from "./pages/ChargeEasyPrivacyPage";
 import CursorGlow from "./components/CursorGlow";
 import "./App.css";
 
@@ -32,6 +33,9 @@ function App() {
                 <Route path="/about" element={<AboutPage />} />
                 <Route path="/projects" element={<ProjectsPage />} />
                 <Route path="/contact" element={<ContactPage />} />
+                <Route path="/privacy/charge-easy" element={<ChargeEasyPrivacyPage />} />
+                <Route path="/privacy-policy" element={<ChargeEasyPrivacyPage />} />
+                <Route path="/charge-easy/privacy" element={<ChargeEasyPrivacyPage />} />
               </Routes>
             </main>
             <Footer />
